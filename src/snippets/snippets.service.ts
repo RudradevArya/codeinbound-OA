@@ -19,13 +19,13 @@ export class SnippetsService {
   }
 
   async findAll(): Promise<Snippet[]> {
-    return this.snippetsRepository.find({ relations: ['user', 'tags'] });
+    return this.snippetsRepository.find({ relations: ['user'] });
   }
 
   async findOne(id: number): Promise<Snippet> {
     const snippet = await this.snippetsRepository.findOne({
       where: { id },
-      relations: ['user', 'tags'],
+      relations: ['user'],
     });
     if (!snippet) {
       throw new NotFoundException(`Snippet with ID ${id} not found`);
