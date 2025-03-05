@@ -5,13 +5,17 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './jwt.strategy';
+const crypto = require('crypto');
+require('dotenv').config();
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: 'secretkey', // use env dumbooooo
+      // secret: crypto.randomBytes(32).toString('hex'), // use env dumbooooo
+      // secret: 'sec',
+      secret: process.env.JWT_SEC,
       signOptions: { expiresIn: '1h' },
     }),
   ],

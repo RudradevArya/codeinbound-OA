@@ -10,22 +10,6 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
-    if (user && await bcrypt.compare(password, user.password)) {
-      const { password, ...result } = user;
-      return result;
-    }
-    return null;
-  }
-
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
-  }
-
   async register(user: any) {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     const newUser = await this.usersService.create({
@@ -34,5 +18,20 @@ export class AuthService {
     });
     const { password, ...result } = newUser;
     return result;
+  }
+
+  async login(user: any) {
+    const foundUser = await this.usersService.findOne(user.username);
+    if (!foundUser) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const isPasswordValid = await bcrypt.compare(user.password, foundUser.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const payload = { username: foundUser.username, sub: foundUser.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }
