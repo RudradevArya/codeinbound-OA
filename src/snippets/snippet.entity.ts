@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { User } from '../users/user.entity';
-import { Tag } from '../tags/tag.entity';
 
 @Entity()
 export class Snippet {
@@ -19,6 +18,9 @@ export class Snippet {
   @Column('text', { nullable: true })
   description: string;
 
+  @Column('simple-array', { nullable: true })
+  tags: string[];
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -27,8 +29,4 @@ export class Snippet {
 
   @ManyToOne(() => User, user => user.snippets)
   user: User;
-
-  @ManyToMany(() => Tag)
-  @JoinTable()
-  tags: Tag[];
 }
