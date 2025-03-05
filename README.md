@@ -66,9 +66,10 @@ http://localhost:3000/api
 To run the tests, use the following command:
 
 `npm run test`
-https://github.com/RudradevArya/codeinbound-OA#
+
 ## Demo
 ![code snipper API Demo at demo/demo.gif](demo/demo.gif)
+
 [![Watch the video](https://raw.githubusercontent.com/RudradevArya/codeinbound-OA/main/demo/thumb.png)](https://raw.githubusercontent.com/RudradevArya/codeinbound-OA/main/demo/demo.mp4)
 
 ## Screenshots
